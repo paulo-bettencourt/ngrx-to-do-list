@@ -1,15 +1,17 @@
 .outside {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
 }
 
 .container-tasks {
+  margin-top: 3%;
   display: flex;
 }
 
 mat-form-field {
   margin-right: 15px;
+}
+
+mat-form-field {
+  width: 400px;
 }
