@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { ToDoFormComponent } from './to-do-form.component';
+
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./to-do-form/to-do-form.module').then(m => m.ToDoFormModule)
+    component: ToDoFormComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class ToDoFormModule { }

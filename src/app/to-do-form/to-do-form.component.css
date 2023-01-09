@@ -1,0 +1,15 @@
+.outside {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-tasks {
+  display: flex;
+}
+
+mat-form-field {
+  margin-right: 15px;
+}
