@@ -1,32 +1,32 @@
+// Server setup and imports
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 app.use(express.json())
+app.listen(3000, () =>
+  console.log('Server started listening on port 3000!'),
+);
 
 // Mongoose Schema && Model
-
-const itemsList = new mongoose.Schema({
+const ItemsList = new mongoose.Schema({
   items: String
 });
-const ItemModel = mongoose.model('ItemsList', itemsList);
+const ItemModel = mongoose.model('ItemsList', ItemsList);
 
 // Express
-
 async function main() {
   await mongoose.connect('mongodb+srv://marketplace:marketplace@cluster0.pnqz7ob.mongodb.net/?retryWrites=true&w=majority');
 }
+main().catch(err => console.log(err));
 
-app.listen(3000, () =>
-  console.log('Example app listening on port 3000!'),
-);
-
-app.get('/', (req, res) => {
-  res.send('hello world', req)
+// CRUD
+app.get('/', async (req, res) => {
+  var list = await ItemModel.find({});
+  res.status(200).send({items: list})
 })
 
 app.post('/post-to-do', (req,res) => {
-
   ItemModel.create({ items: req.body.item }, (error, document) => {
     if (error) {
       console.log(error);
@@ -34,9 +34,7 @@ app.post('/post-to-do', (req,res) => {
       console.log(`Document created with ID ${document._id}`);
     }
   })
-
   res.status(200).send({ok: 'ok'});
 })
 
 
-main().catch(err => console.log(err));
