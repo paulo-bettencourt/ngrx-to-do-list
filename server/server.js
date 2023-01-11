@@ -1,23 +1,19 @@
 // Server setup and imports
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
-app.use(express.json())
+app.use(express.json());
 app.listen(3000, () =>
-  console.log('Server started listening on port 3000!'),
+  console.log('Server started listening on port 3000!')
 );
 
 // Mongoose Schema && Model
-const ItemsList = new mongoose.Schema({
-  items: String
-});
+const ItemsList = new mongoose.Schema({items: String});
 const ItemModel = mongoose.model('ItemsList', ItemsList);
 
 // Express
-async function main() {
-  await mongoose.connect('mongodb+srv://marketplace:marketplace@cluster0.pnqz7ob.mongodb.net/?retryWrites=true&w=majority');
-}
+async function main() { await mongoose.connect('mongodb+srv://marketplace:marketplace@cluster0.pnqz7ob.mongodb.net/?retryWrites=true&w=majority') }
 main().catch(err => console.log(err));
 
 // CRUD
@@ -31,10 +27,11 @@ app.post('/post-to-do', (req,res) => {
     if (error) {
       console.log(error);
     } else {
+      documentSend = document._id;
       console.log(`Document created with ID ${document._id}`);
     }
   })
-  res.status(200).send({ok: 'ok'});
+  res.status(200).send({message: 'item has been added'});
 })
 
 
