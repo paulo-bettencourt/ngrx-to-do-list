@@ -29,7 +29,7 @@ app.post('/item', (req,res) => {
     if (error) {
       console.log(error);
     } else {
-      console.log(`Document created with ID ${document._id}`);
+      console.log(`Document CREATED with ID ${document._id}`);
       res.status(200);
     }
   })
@@ -37,13 +37,14 @@ app.post('/item', (req,res) => {
 
 app.delete('/item/:id', (req,res)=> {
   console.log("ID PARA DELETAR", req.params.id),
-  ItemModel.deleteOne({_id: req.params.id}).then(function(){
-    console.log("Data deleted"); // Success
-    res.send(200)
-  }).catch(function(error){
-    console.log(error); // Failure
-  });
-
+  ItemModel.deleteOne({_id: req.params.id}, (error, document) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(`Document DELETED`);
+      res.send(200);
+    }
+  })
 })
 
 
