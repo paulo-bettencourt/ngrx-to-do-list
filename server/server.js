@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
+var cors = require('cors');
+app.use(cors())
 app.use(express.json());
 app.listen(3000, () =>
   console.log('Server started listening on port 3000!')
@@ -19,7 +21,7 @@ main().catch(err => console.log(err));
 // CRUD
 app.get('/', async (req, res) => {
   var list = await ItemModel.find({});
-  res.status(200).send({items: list})
+  res.status(200).send(list)
 })
 
 app.post('/post-to-do', (req,res) => {
@@ -27,7 +29,6 @@ app.post('/post-to-do', (req,res) => {
     if (error) {
       console.log(error);
     } else {
-      documentSend = document._id;
       console.log(`Document created with ID ${document._id}`);
     }
   })
