@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from "rxjs";
-import {HeroService} from "../services/to-do.service";
+import {ItemService} from "../services/to-do.service";
 import {FormBuilder, Validators} from "@angular/forms";
 import {BackendService} from "../services/backend.service";
 import {Items} from "../interfaces/items";
@@ -17,38 +17,45 @@ export class ToDoFormComponent implements OnInit {
   form = this.fb.group({
     item: ['']
   })
-  itemList!: Observable<any>;
+  itemList$!: Observable<any>;
 
-  constructor(private heroService: HeroService, private fb: FormBuilder, private backendService: BackendService) {
-    this.heroes$ = heroService.entities$;
-    this.loading$ = heroService.loading$;
+  constructor(private itemService: ItemService, private fb: FormBuilder, private backendService: BackendService) {
+    this.heroes$ = itemService.entities$;
+    this.loading$ = itemService.loading$;
     console.log("componente")
-    this.itemList = this.backendService.getAllItems()
+    this.itemList$ = this.backendService.getAllItems();
   }
 
   ngOnInit() {
     this.getHeroes();
   }
 
-  add(hero: any) {
-    this.heroService.add(hero);
+  add(item: any) {
+    this.itemService.add(item);
   }
 
   delete(hero: any) {
-    this.heroService.delete(hero.id);
+    this.itemService.delete(hero.id);
   }
 
   getHeroes() {
-    this.heroService.getAll();
+    this.itemService.getAll();
   }
 
   update(hero: any) {
-    this.heroService.update(hero);
+    this.itemService.update(hero);
   }
 
   onSubmit() {
+
+    const itemData = this.form.controls.item.value;
+
+    this.add(itemData);
+
+   // this.heroes$.subscribe(data =>console.log("ENTIDADES", data))
+
     let item = {
-      item: this.form.controls.item.value
+      item: itemData
     }
     console.log("ITEM É ESTE", item)
 

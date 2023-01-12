@@ -1,12 +1,15 @@
 import { EntityMetadataMap } from '@ngrx/data';
 
 const entityMetadata: EntityMetadataMap = {
-  Hero: {},
-  Villain: {}
+  Item: {
+    entityName: 'Item',
+    selectId: function defaultSelectId(entity) {
+      return entity == null ? undefined : entity._id
+    }
+  }
 };
 
-// because the plural of "hero" is not "heros"
-const pluralNames = { Hero: 'Heroes' };
+const pluralNames = { Item: '' };
 
 export const entityConfig = {
   entityMetadata,

@@ -19,6 +19,11 @@ async function main() { await mongoose.connect('mongodb+srv://marketplace:market
 main().catch(err => console.log(err));
 
 // CRUD
+app.get('/items', async (req, res) => {
+  var list = await ItemModel.find({});
+  res.status(200).send(list)
+})
+
 app.get('/', async (req, res) => {
   var list = await ItemModel.find({});
   res.status(200).send(list)
@@ -33,6 +38,18 @@ app.post('/post-to-do', (req,res) => {
     }
   })
   res.status(200).send({message: 'item has been added'});
+})
+
+app.post('/item', (req,res) => {
+  ItemModel.create({ items: req.body.item }, (error, document) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(`Document created with ID ${document._id}`);
+      res.status(200);
+    }
+  })
+
 })
 
 

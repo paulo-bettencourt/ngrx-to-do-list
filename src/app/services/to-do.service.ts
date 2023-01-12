@@ -5,8 +5,8 @@ import {
 } from '@ngrx/data';
 
 @Injectable({ providedIn: 'root' })
-export class HeroService extends EntityCollectionServiceBase<any> {
+export class ItemService extends EntityCollectionServiceBase<any> {
   constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
-    super('Hero', serviceElementsFactory);
+    super('Item', serviceElementsFactory);
   }
 }

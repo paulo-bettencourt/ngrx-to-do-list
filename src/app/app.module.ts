@@ -10,13 +10,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ToDoFormComponent } from './to-do-form/to-do-form.component';
-import { EntityDataModule } from '@ngrx/data';
+import {DefaultDataServiceConfig, EntityDataModule, EntityDataService} from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 import { StoreModule } from '@ngrx/store';
 import {HttpClientModule} from "@angular/common/http";
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CustomEntityService} from "./services/custom-entity-service";
+
+const defaultDataServiceConfig: DefaultDataServiceConfig = {
+  root: 'http://localhost:3000/',
+}
 
 @NgModule({
   declarations: [
@@ -31,17 +36,18 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     BrowserAnimationsModule,
     MatButtonModule,
     MatIconModule,
-    StoreModule.forRoot({}),
     MatToolbarModule,
-    EntityDataModule.forRoot(entityConfig),
     HttpClientModule,
     StoreModule.forRoot({}, {}),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([]),
+    EntityDataModule.forRoot(entityConfig),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{ provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig }
+  ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

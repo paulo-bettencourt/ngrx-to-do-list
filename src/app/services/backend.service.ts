@@ -21,4 +21,8 @@ export class BackendService {
     return this.http.post<Items>(this.url + 'post-to-do', item);
   }
 
+  add(item: {}) {
+    return this.http.post<Items>(this.url + 'post-to-do', item);
+  }
+
 }
