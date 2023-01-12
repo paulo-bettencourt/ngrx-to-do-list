@@ -1,6 +1,6 @@
 <script src="../../../server/server.js"></script>
 <script src="to-do-form.component.ts"></script>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="add()">
   <div class="outside">
     <div class="container-tasks">
       <mat-form-field appearance="fill">
@@ -18,17 +18,16 @@
   </div>
 </form>
 <p></p>
-<div class="stuff-list">
 
+<div class="stuff-list">
   <mat-list>
   <mat-list-item *ngFor="let item of itemList$ | async; index as i">
     <div matListItemTitle>{{item.items}}</div>
     <hr>
     <div matListItemLine>Task Number #{{i + 1}}</div>
-    <mat-icon matListItemIcon (click)="onDelete(item._id)">delete_sweep</mat-icon>
+    <mat-icon matListItemIcon (click)="delete(item)">delete_sweep</mat-icon>
     <mat-divider></mat-divider>
   </mat-list-item>
-
 </mat-list>
 </div>
 

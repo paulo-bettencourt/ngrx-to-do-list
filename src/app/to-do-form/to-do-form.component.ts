@@ -25,12 +25,14 @@ export class ToDoFormComponent implements OnInit {
     this.getHeroes();
   }
 
-  add(item: any) {
-    this.itemService.add(item);
+  async add() {
+    this.itemService.add({item: this.form.controls['item'].value});
+    this.itemList$ = await this.itemService.getAll();
   }
 
-  delete(hero: any) {
-    this.itemService.delete(hero.id);
+  delete(item: any) {
+
+    this.itemService.delete(item._id);
   }
 
   getHeroes() {
@@ -41,20 +43,4 @@ export class ToDoFormComponent implements OnInit {
     this.itemService.update(hero);
   }
 
-  async onSubmit() {
-
-    const itemData = this.form.controls['item'].value;
-
-    this.add({item: itemData});
-
-    this.itemList$ = await this.itemService.getAll();
-
-    console.log('ok')
-
-  }
-
-  onDelete(_id: any) {
-    this.delete(_id);
-
-  }
 }
