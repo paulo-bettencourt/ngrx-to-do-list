@@ -12,18 +12,13 @@ import {Items} from "../interfaces/items";
 })
 export class ToDoFormComponent implements OnInit {
 
-  loading$: Observable<boolean>;
-  heroes$: Observable<any[]>;
   form = this.fb.group({
     item: ['']
   })
   itemList$!: Observable<any>;
 
   constructor(private itemService: ItemService, private fb: FormBuilder, private backendService: BackendService) {
-    this.heroes$ = itemService.entities$;
-    this.loading$ = itemService.loading$;
-    console.log("componente")
-    this.itemList$ = this.backendService.getAllItems();
+    this.itemList$ = this.itemService.getAll();
   }
 
   ngOnInit() {
@@ -46,21 +41,20 @@ export class ToDoFormComponent implements OnInit {
     this.itemService.update(hero);
   }
 
-  onSubmit() {
+  async onSubmit() {
 
-    const itemData = this.form.controls.item.value;
+    const itemData = this.form.controls['item'].value;
 
-    this.add(itemData);
+    this.add({item: itemData});
 
-   // this.heroes$.subscribe(data =>console.log("ENTIDADES", data))
+    this.itemList$ = await this.itemService.getAll();
 
-    let item = {
-      item: itemData
-    }
-    console.log("ITEM É ESTE", item)
+    console.log('ok')
 
-    this.backendService.postItem(item).subscribe(data => {
-      console.log(data)
-    })
+  }
+
+  onDelete(_id: any) {
+    this.delete(_id);
+
   }
 }

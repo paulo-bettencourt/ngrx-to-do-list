@@ -19,8 +19,16 @@ mat-form-field {
 .stuff-list {
   margin-top: 4rem;
   text-align: center;
+  width: 300px;
+  margin: auto;
 }
 
 h2 {
-  font-size: 50px;
+  font-size: 25px;
+  margin: auto;
+  text-align: center;
+}
+
+.mat-mdc-list-item-icon {
+  color: rgba(0, 0, 0, 0.54);
 }

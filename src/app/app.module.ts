@@ -18,6 +18,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CustomEntityService} from "./services/custom-entity-service";
+import {MatListModule} from '@angular/material/list';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: 'http://localhost:3000/',
@@ -43,7 +44,8 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
     EntityDataModule.forRoot(entityConfig),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatListModule
   ],
   providers: [{ provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig }
   ],
