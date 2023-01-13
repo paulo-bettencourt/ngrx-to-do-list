@@ -1,28 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from "rxjs";
+import {forkJoin, Observable} from "rxjs";
 import {ItemService} from "../services/to-do.service";
 import {FormBuilder, Validators} from "@angular/forms";
 import {BackendService} from "../services/backend.service";
 import {Items} from "../interfaces/items";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-to-do-form',
   templateUrl: './to-do-form.component.html',
   styleUrls: ['./to-do-form.component.css']
 })
-export class ToDoFormComponent implements OnInit {
+export class ToDoFormComponent {
 
   form = this.fb.group({
     item: ['']
   })
-  itemList$!: Observable<any>;
+  itemList$!: Observable<Items[]>;
 
-  constructor(private itemService: ItemService, private fb: FormBuilder, private backendService: BackendService) {
+  constructor(private itemService: ItemService, private fb: FormBuilder) {
     this.itemList$ = this.itemService.getAll();
-  }
-
-  ngOnInit() {
-    this.getHeroes();
   }
 
   async add() {
@@ -30,17 +27,9 @@ export class ToDoFormComponent implements OnInit {
     this.itemList$ = await this.itemService.getAll();
   }
 
-  delete(item: any) {
-
+  async delete(item: any) {
     this.itemService.delete(item._id);
-  }
-
-  getHeroes() {
-    this.itemService.getAll();
-  }
-
-  update(hero: any) {
-    this.itemService.update(hero);
+    this.itemList$ = await this.itemService.getAll();
   }
 
 }
